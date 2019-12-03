@@ -1,0 +1,16 @@
+[
+{
+  "modid": "claimitdynmap",
+  "name": "ClaimIt-Dynmap",
+  "description": "Dynmap Integration for ClaimIt",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["its_meow"],
+  "credits": "its_meow: for the mod",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
