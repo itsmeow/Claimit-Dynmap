@@ -28,14 +28,11 @@ minecraft {
 
 repositories {
     jcenter()
-    maven { url = "http://repo.mikeprimm.com" }
 }
 
 dependencies {
     deobfCompile "its_meow.claimit:claimitapi:${claimitapi_version}"
     deobfCompile "its_meow.claimit:claimit:${claimit_version}"
-    //deobfCompile "us.dynmap:forge-1.12.2-forge-1.12.2:${dynmapforge_version}"
-    //deobfCompile "us.dynmap:DynmapCoreAPI:${dynmapforge_version}"
 }
 
 processResources {
