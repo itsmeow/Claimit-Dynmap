@@ -32,7 +32,6 @@ repositories {
 
 dependencies {
     deobfCompile "its_meow.claimit:claimitapi:${claimitapi_version}"
-    deobfCompile "its_meow.claimit:claimit:${claimit_version}"
 }
 
 processResources {

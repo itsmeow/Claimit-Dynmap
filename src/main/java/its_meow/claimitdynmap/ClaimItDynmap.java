@@ -2,6 +2,9 @@ package its_meow.claimitdynmap;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
+
+import javax.annotation.Nonnull;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,14 +14,18 @@ import org.dynmap.markers.AreaMarker;
 import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerSet;
 
+import com.mojang.authlib.GameProfile;
+
 import its_meow.claimit.api.claim.ClaimArea;
 import its_meow.claimit.api.claim.ClaimManager;
 import its_meow.claimit.api.event.claim.ClaimAddedEvent;
 import its_meow.claimit.api.event.claim.ClaimRemovedEvent;
 import its_meow.claimit.api.event.claim.ClaimsClearedEvent;
+import its_meow.claimit.api.userconfig.UserConfigType;
 import its_meow.claimit.api.userconfig.UserConfigType.UserConfig;
 import its_meow.claimit.api.userconfig.UserConfigTypeRegistry;
-import its_meow.claimit.util.command.CommandUtils;
+import its_meow.claimit.api.util.nbt.NBTDeserializer;
+import its_meow.claimit.api.util.nbt.NBTSerializer;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -149,12 +156,12 @@ public class ClaimItDynmap extends DynmapCommonAPIListener {
 
             double[] xList = new double[] { claim.getMainPosition().getX(), claim.getLXHZPosition().getX(), claim.getHXZPosition().getX(), claim.getHXLZPosition().getX() };
             double[] zList = new double[] { claim.getMainPosition().getZ(), claim.getLXHZPosition().getZ(), claim.getHXZPosition().getZ(), claim.getHXLZPosition().getZ() };
-            String stToolTip = "<strong>Claim Name: </strong>" + claim.getDisplayedViewName() + 
+            String tooltip = "<strong>Claim Name: </strong>" + claim.getDisplayedViewName() +
             "<br><strong>Area: </strong>" + (claim.getSideLengthX() + 1) + "x" + (claim.getSideLengthZ() + 1) + " (" + claim.getArea() + ")" +
-            "<br><strong>Owner: </strong>" + CommandUtils.getNameForUUID(claim.getOwner(), claim.getWorld().getMinecraftServer())  + " (" + claim.getOwner() + ")";
+            "<br><strong>Owner: </strong>" + getNameForUUID(claim.getOwner(), claim.getWorld().getMinecraftServer()) + " (" + claim.getOwner() + ")";
 
             // Create the area marker for the claim
-            AreaMarker marker = markerSet.createAreaMarker(markerID, stToolTip, true, worldName, xList, zList, false);
+            AreaMarker marker = markerSet.createAreaMarker(markerID, tooltip, true /* tooltip is HTML */, worldName, xList, zList, false /* non-persistent marker */);
 
             // Configure the marker style
             if(marker != null) {
@@ -174,6 +181,7 @@ public class ClaimItDynmap extends DynmapCommonAPIListener {
                 ClaimItDynmap.LOGGER.error("Failed to create Dynmap marker for claim " + claim.getTrueViewName());
             }
         } else {
+            // Queue loaded claims while API is not initialized
             if(dynmapLoaded) {
                 ClaimItDynmap.LOGGER.error("Failed to load Dynmap marker set.");
             } else {
@@ -184,6 +192,54 @@ public class ClaimItDynmap extends DynmapCommonAPIListener {
 
     private static Integer getColorInt(String in) {
         return Integer.parseInt(in.substring(2), 16);
+    }
+
+    @Nonnull
+    private static String getNameForUUID(UUID uuid, MinecraftServer server) {
+        String name = null;
+        GameProfile profile = server.getPlayerProfileCache().getProfileByUUID(uuid);
+        if(profile != null) {
+            name = profile.getName();
+        } else {
+            name = uuid.toString();
+        }
+        return name;
+    }
+
+    public static class UserConfigTypeColor extends UserConfigType<String> {
+
+        public UserConfigTypeColor() {
+            super(String.class);
+        }
+
+        @Override
+        protected NBTSerializer<String> getSerializer() {
+            return (c, s, v) -> c.setString(s, (String) v);
+        }
+
+        @Override
+        protected NBTDeserializer<String> getDeserializer() {
+            return (c, s) -> c.getString(s);
+        }
+
+        @Override
+        public boolean isValidValue(String in) {
+            if(in.matches("0x[0-9a-fA-F]{6}")) {
+                try {
+                    Integer.parseInt(in.substring(2), 16);
+                } catch(NumberFormatException e) {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public String fromString(String valueStr) {
+            return valueStr;
+        }
+
     }
 
 }

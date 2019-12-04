@@ -5,11 +5,11 @@
   "description": "Dynmap Integration for ClaimIt",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/claimit-dynmap",
   "updateUrl": "",
   "authorList": ["its_meow"],
   "credits": "its_meow: for the mod",
-  "logoFile": "",
+  "logoFile": "claimit-dynmap.png",
   "screenshots": [],
   "dependencies": []
 }
