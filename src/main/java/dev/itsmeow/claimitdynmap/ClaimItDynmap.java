@@ -1,4 +1,4 @@
-package its_meow.claimitdynmap;
+package dev.itsmeow.claimitdynmap;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,16 +16,16 @@ import org.dynmap.markers.MarkerSet;
 
 import com.mojang.authlib.GameProfile;
 
-import its_meow.claimit.api.claim.ClaimArea;
-import its_meow.claimit.api.claim.ClaimManager;
-import its_meow.claimit.api.event.claim.ClaimAddedEvent;
-import its_meow.claimit.api.event.claim.ClaimRemovedEvent;
-import its_meow.claimit.api.event.claim.ClaimsClearedEvent;
-import its_meow.claimit.api.userconfig.UserConfigType;
-import its_meow.claimit.api.userconfig.UserConfigType.UserConfig;
-import its_meow.claimit.api.userconfig.UserConfigTypeRegistry;
-import its_meow.claimit.api.util.nbt.NBTDeserializer;
-import its_meow.claimit.api.util.nbt.NBTSerializer;
+import dev.itsmeow.claimit.api.claim.ClaimArea;
+import dev.itsmeow.claimit.api.claim.ClaimManager;
+import dev.itsmeow.claimit.api.event.claim.ClaimAddedEvent;
+import dev.itsmeow.claimit.api.event.claim.ClaimRemovedEvent;
+import dev.itsmeow.claimit.api.event.claim.ClaimsClearedEvent;
+import dev.itsmeow.claimit.api.userconfig.UserConfigType;
+import dev.itsmeow.claimit.api.userconfig.UserConfigType.UserConfig;
+import dev.itsmeow.claimit.api.userconfig.UserConfigTypeRegistry;
+import dev.itsmeow.claimit.api.util.nbt.NBTDeserializer;
+import dev.itsmeow.claimit.api.util.nbt.NBTSerializer;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
