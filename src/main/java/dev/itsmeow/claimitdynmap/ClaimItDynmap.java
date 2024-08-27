@@ -154,8 +154,8 @@ public class ClaimItDynmap extends DynmapCommonAPIListener {
             String worldName = claim.getWorld().getWorldInfo().getWorldName();
             String markerID = "CLAIMIT_" + String.valueOf(claim.hashCode());
 
-            double[] xList = new double[] { claim.getMainPosition().getX(), claim.getLXHZPosition().getX(), claim.getHXZPosition().getX(), claim.getHXLZPosition().getX() };
-            double[] zList = new double[] { claim.getMainPosition().getZ(), claim.getLXHZPosition().getZ(), claim.getHXZPosition().getZ(), claim.getHXLZPosition().getZ() };
+            double[] xList = new double[] { claim.getMainPosition().getX(), claim.getLXHZPosition().getX(), claim.getHXZPosition().getX() + 1, claim.getHXLZPosition().getX() + 1 };
+            double[] zList = new double[] { claim.getMainPosition().getZ(), claim.getLXHZPosition().getZ() + 1, claim.getHXZPosition().getZ() + 1, claim.getHXLZPosition().getZ() };
             String tooltip = "<strong>Claim Name: </strong>" + claim.getDisplayedViewName() +
             "<br><strong>Area: </strong>" + (claim.getSideLengthX() + 1) + "x" + (claim.getSideLengthZ() + 1) + " (" + claim.getArea() + ")" +
             "<br><strong>Owner: </strong>" + getNameForUUID(claim.getOwner(), claim.getWorld().getMinecraftServer()) + " (" + claim.getOwner() + ")";
@@ -241,5 +241,4 @@ public class ClaimItDynmap extends DynmapCommonAPIListener {
         }
 
     }
-
 }
